@@ -1,34 +1,27 @@
 package main;
 
-import account.Account;
-import account.UserInfo;
-import connectdb.JDBCUtils;
-
-import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
+import accountmanagement.AccountManagement;
+import accountmanagement.UserInformation;
 
 public class Main {
-    public static void main(String[] args) throws SQLException {
-        Connection conn = JDBCUtils.getConn();
+    public static void main(String[] args) throws Exception {
+        AccountManagement.ConnectToDatabase();
+        System.out.println("Counter: " + AccountManagement.size());
 
-        Account acc = new Account(conn);
+        try {
+//            if (AccountManagement.CheckLogin("acc01", "p01"))
+//                System.out.println("Welcome!!!");
+            if (AccountManagement.AddAccount("acc06", "p04"
+                    , "A", "Le", "fff@gmail.com", "12321", "Ha noi"))
+                System.out.println("Accept!!!");;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Counter: " + AccountManagement.size());
 
 
-        UserInfo u1 = new UserInfo("acc04", "p02"
-                , "Nghĩa", "Nguyễn"
-                , "email03@yahoo.com.vn", "113"
-                , "Hải Phòng");
-
-//        System.out.println(u1);
-        acc.printAccountToConsole();
-
-        acc.addAccount(conn, u1);
-
-        acc.printAccountToConsole();
-
-        conn.close();
+        System.out.println("Done");
     }
 }
